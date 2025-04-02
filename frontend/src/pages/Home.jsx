@@ -20,17 +20,17 @@ const Home = () => {
     {
       title: "iPhone 13 Pro",
       price: "₹90000",
-      img: "src/assets/iphone13pro.png",
+      img: "/iphone13pro.png",
     },
     {
       title: "Harry Potter",
       price: "₹35000",
-      img: "src/assets/hp.jpg",
+      img: "/hp.jpg",
     },
     {
       title: "MacBook Pro M1",
       price: "₹100000",
-      img: "src/assets/mpm1.png",
+      img: "/mpm1.png",
     },
   ];
 
