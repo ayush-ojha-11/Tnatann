@@ -17,7 +17,9 @@ const Products = () => {
     }
   }, [authUser, navigate]);
 
-  useEffect(() => {}, [allProducts]);
+  useEffect(() => {
+    if (!allProducts) fetchProducts();
+  }, [allProducts, fetchProducts]);
 
   return (
     <div className="container min-h-screen mx-auto p-4 ">

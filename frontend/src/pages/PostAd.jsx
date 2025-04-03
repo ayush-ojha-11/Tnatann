@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
+import { useProductStore } from "../store/useProductStore";
 
 const categories = [
   "Electronics",
@@ -23,6 +24,7 @@ const PostAd = () => {
     image: null,
   });
   const [loading, setLoading] = useState(false);
+  const { fetchProducts } = useProductStore();
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -54,6 +56,8 @@ const PostAd = () => {
     try {
       await axiosInstance.post("/products", formDataObj);
       toast.success("Ad posted successfully.");
+      // fetching products to update allProducts in the store
+      fetchProducts();
     } catch (error) {
       console.error("Error posting ad: ", error.message);
       toast.error(error.response?.data?.message || "Something went wrong!");
