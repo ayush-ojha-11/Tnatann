@@ -12,8 +12,8 @@ const ProductCard = ({ product }) => {
       <div className="p-4">
         <h3 className="text-lg font-bold">{product.title}</h3>
         <p className="text-base-content/70 text-sm">{product.category}</p>
-        <p className="text-base-content font-medium mt-3">
-          Price - ₹{product.price}
+        <p className="text-green-600 font-medium mt-3">
+          <span className="text-base-content">Price -</span> ₹{product.price}
         </p>
         <button
           onClick={() => navigate(`/products/${product._id}`)}

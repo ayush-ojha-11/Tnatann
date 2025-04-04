@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { Search, ShoppingBag, User, Star, Moon, Sun } from "lucide-react";
+import { User, Star } from "lucide-react";
+import { APP_NAME } from "../constants/constants";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const Home = () => {
           Buy & Sell Anything, Anytime!
           <br />
           <span className="bg-gradient-to-r from-pink-500 via-indigo-600 to-pink-500 p-1 bg-clip-text text-transparent">
-            with Tnatann
+            with {APP_NAME}
           </span>
         </h1>
 

@@ -10,6 +10,8 @@ import PostAd from "./pages/PostAd.jsx";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import SellerDashboard from "./pages/SellerDashboard.jsx";
+import About from "./pages/About.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const appRouter = createBrowserRouter([
         element: <Register />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
+      {
         path: "/products",
         element: <Products />,
       },
@@ -43,8 +53,7 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/seller-dashboard",
-        element: <ProtectedRoute role="seller" />,
-        children: [{ path: "", element: <SellerDashboard /> }],
+        element: <SellerDashboard />,
       },
     ],
   },

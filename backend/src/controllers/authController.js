@@ -78,3 +78,18 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: "Internal server error!" });
   }
 };
+export const changeRole = async (req, res) => {
+  try {
+    const role = "seller";
+    const userId = req.user._id;
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { role: role },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log("Error in authController (changeRole) ", error.message);
+    res.status(500).json({ message: "Internal server error!" });
+  }
+};

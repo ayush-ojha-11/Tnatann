@@ -44,7 +44,16 @@ export const useAuthStore = create(
         set({ authUser: null });
         toast.success(res.data.message);
       } catch (error) {
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data?.message);
+      }
+    },
+    changeRole: async () => {
+      try {
+        const res = await axiosInstance.put("/auth/changerole");
+        set({ authUser: res.data });
+        toast.success("Role changed successfully.");
+      } catch {
+        toast.error("Unable to change role!");
       }
     },
   }))
