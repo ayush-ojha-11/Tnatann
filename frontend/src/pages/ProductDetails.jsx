@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { useProductStore } from "../store/useProductStore";
-import { useAuthStore } from "../store/useAuthStore";
+import { useProductStore } from "../store/useProductStore.js";
+import { useAuthStore } from "../store/useAuthStore.js";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 

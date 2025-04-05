@@ -1,20 +1,29 @@
 import { Link } from "react-router-dom";
 import { LogOut, Menu, User } from "lucide-react";
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../store/useAuthStore.js";
 import { APP_NAME } from "../constants/constants";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { authUser, logout } = useAuthStore();
-  console.log(authUser);
+  const [mode, setMode] = useState(null);
 
-  const isDarkModeOn = () => {
-    //TODO
-    const isDark = localStorage.getItem("chat-theme");
-    if (isDark === "sunset") {
-      return true;
-    }
-    return false;
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setMode(mediaQuery.matches);
+
+    const handleChange = (e) => {
+      setMode(e.matches);
+    };
+
+    //Attach the event listener
+    mediaQuery.addEventListener("change", handleChange);
+
+    //cleanup function - to remove event listener when component unmounts
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
 
   if (!authUser) {
     return (
@@ -26,7 +35,7 @@ const Navbar = () => {
             className="text-2xl font-semibold flex items-center gap-2"
           >
             <img
-              src={isDarkModeOn ? "tnatann-dark.svg" : "tnatann.svg"}
+              src={mode ? "tnatann-dark.svg" : "tnatann.svg"}
               className="size-10"
             />
             <span className="text-base-content">{APP_NAME}</span>
@@ -88,7 +97,6 @@ const Navbar = () => {
       </nav>
     );
   }
-
   if (authUser) {
     return (
       <nav className="navbar bg-base-200 text-base-content shadow-lg px-6">
@@ -111,13 +119,16 @@ const Navbar = () => {
                 <Link to="/contact">Contact us</Link>
               </li>
               <li>
-                <Link to="/seller-dashboard" className="bg-primary pl-5 pr-5">
+                <Link
+                  to="/seller-dashboard"
+                  className="btn btn-primary pl-5 pr-5"
+                >
                   Sell
                 </Link>
               </li>
               <li>
-                <button className="btn btn-neutral" onClick={() => logout()}>
-                  Logout <LogOut className="size-5" />
+                <button className="" onClick={() => logout()}>
+                  <LogOut className="size-5" /> Logout
                 </button>
               </li>
             </ul>

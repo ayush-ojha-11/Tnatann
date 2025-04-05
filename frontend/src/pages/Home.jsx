@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../store/useAuthStore.js";
 import { User, Star } from "lucide-react";
 import { APP_NAME } from "../constants/constants";
 
@@ -141,7 +141,9 @@ const Home = () => {
             <div key={index} className="p-4 bg-base-300 shadow rounded-lg">
               <p className="text-lg">"{user.review}"</p>
               <p className="text-yellow-500 mt-2 flex justify-center">
-                {Array(user.rating).fill(<Star size={16} />)}
+                {Array(user.rating).fill(
+                  <Star size={16} key={user.rating++} />
+                )}
               </p>
               <h3 className="font-semibold mt-2">{user.name}</h3>
             </div>

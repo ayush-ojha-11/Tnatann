@@ -1,51 +1,67 @@
-import React, { useEffect, useState } from "react";
-import { axiosInstance } from "../lib/axios.js";
-import { toast } from "react-hot-toast";
-import { Link } from "react-router-dom";
-import { Edit, Trash } from "lucide-react";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Edit, LogOut, Trash } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
+import { useProductStore } from "../store/useProductStore.js";
 
 const SellerDashboard = () => {
-  const { authUser, changeRole } = useAuthStore();
-  const [products, setProducts] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { authUser, changeRole, logout } = useAuthStore();
+  const {
+    deleteAProduct,
+    isDeleting,
+    isLoading,
+    fetchProductsOfSeller,
+    productsOfASeller,
+  } = useProductStore();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const { data } = await axiosInstance.get("products/seller/products");
-        setProducts(data);
-      } catch (error) {
-        toast.error(error.response.data.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (authUser.role === "seller") fetchProducts();
-  }, [authUser.role]);
+    if (!authUser) {
+      navigate("/login");
+    }
+  }, [authUser, navigate]);
+
+  useEffect(() => {
+    if (authUser && authUser.role === "seller") fetchProductsOfSeller();
+  }, [authUser, fetchProductsOfSeller]);
 
   const changeRoleToSeller = () => {
     changeRole();
   };
 
-  return authUser.role === "seller" ? (
+  const handleDelete = (productId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this ad?"
+    );
+    if (!confirmDelete) return;
+    deleteAProduct(productId);
+  };
+
+  return authUser?.role === "seller" ? (
     <div className="mx-auto p-4 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Seller Dashboard</h2>
-        <Link to="/post-ad">
-          <button className="btn btn-primary m-3">Post New Ad</button>
-        </Link>
+      <div className="flex justify-between items-center mb-8">
+        <h2 className="md:text-xl font-bold">Seller Dashboard</h2>
+        <div className="space-x-3">
+          <Link to="/post-ad" className="btn btn-primary">
+            Post new Ad
+          </Link>
+          <button className="btn btn-error" onClick={() => logout()}>
+            Logout <LogOut className="size-5" />
+          </button>
+        </div>
       </div>
 
       <h2 className="text-xl font-medium mb-4 text-center">All your Ads</h2>
 
-      {loading ? (
-        <p className="text-center text-gray-500">Loading...</p>
-      ) : products.length === 0 ? (
-        <p className="text-center text-gray-500">No products listed yet.</p>
-      ) : (
+      {isLoading ? (
+        <p className="text-center text-lg text-base-content">Loading...</p>
+      ) : productsOfASeller?.length === 0 ? (
+        <p className="text-center text-lg text-base-content">
+          No products listed yet.
+        </p>
+      ) : !isDeleting ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
+          {productsOfASeller?.map((product) => (
             <div
               key={product._id}
               className="bg-base-300 shadow-lg rounded-lg overflow-hidden"
@@ -69,7 +85,10 @@ const SellerDashboard = () => {
                       <Edit className="size-5" /> Edit
                     </button>
                   </Link>
-                  <button className="btn btn-error btn-ghost">
+                  <button
+                    className="btn btn-error btn-ghost"
+                    onClick={() => handleDelete(product._id)}
+                  >
                     <Trash /> Delete
                   </button>
                 </div>
@@ -77,6 +96,8 @@ const SellerDashboard = () => {
             </div>
           ))}
         </div>
+      ) : (
+        <div>Please wait, deleting your Ad...</div>
       )}
     </div>
   ) : (
