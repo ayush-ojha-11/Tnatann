@@ -97,7 +97,9 @@ const SellerDashboard = () => {
           ))}
         </div>
       ) : (
-        <div>Please wait, deleting your Ad...</div>
+        <h1 className="text-center text-lg">
+          Please wait, deleting your Ad...
+        </h1>
       )}
     </div>
   ) : (
