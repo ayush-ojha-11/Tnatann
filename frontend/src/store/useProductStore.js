@@ -9,6 +9,7 @@ export const useProductStore = create(
       allProducts: null,
       productsOfASeller: null,
       isLoading: false,
+      isUpdating: false,
       isDeleting: false,
       otherProducts: null,
       fetchProducts: async () => {
@@ -73,6 +74,41 @@ export const useProductStore = create(
           );
         } finally {
           set({ isDeleting: false });
+        }
+      },
+
+      updateProduct: async (product, formDataObj) => {
+        try {
+          set({ isUpdating: true });
+          const { data: updatedProduct } = await axiosInstance.put(
+            `/products/${product._id}`,
+            formDataObj
+          );
+          if (updatedProduct) {
+            toast.success("Edited successfully.");
+
+            // Now updating the store with new product data
+
+            set((state) => {
+              const updateList = (list) =>
+                list?.map((item) =>
+                  item._id === updatedProduct._id ? updatedProduct : item
+                );
+
+              return {
+                allProducts: updateList(state.allProducts),
+                productsOfASeller: updateList(state.productsOfASeller),
+              };
+            });
+          }
+        } catch (error) {
+          console.log(
+            "Error in useProductStore (updateProduct)",
+            error.message
+          );
+          toast.error("Editing failed!");
+        } finally {
+          set({ isUpdating: false });
         }
       },
     }),

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const productSchema = new mongoose.Schema(
   {
@@ -7,6 +8,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     category: { type: String, required: true },
     image: { type: String, required: true },
+    imagePublicId: { type: String },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

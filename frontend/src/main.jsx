@@ -12,6 +12,7 @@ import ProductDetails from "./pages/ProductDetails.jsx";
 import SellerDashboard from "./pages/SellerDashboard.jsx";
 import About from "./pages/About.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
+import EditAd from "./pages/EditAd.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/seller-dashboard",
         element: <SellerDashboard />,
+      },
+      {
+        path: "editAd",
+        element: <EditAd />,
       },
     ],
   },

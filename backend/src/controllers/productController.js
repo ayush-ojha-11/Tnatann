@@ -39,6 +39,7 @@ export const createProduct = async (req, res) => {
     }
     const { title, description, price, category, image } = req.body;
     let imageUrl = null;
+    let imagePublicId;
 
     if (req.file) {
       // Upload image to Cloudinary
@@ -47,6 +48,7 @@ export const createProduct = async (req, res) => {
       });
 
       imageUrl = result.secure_url;
+      imagePublicId = result.public_id;
 
       // Delete the locally stored file after upload
       fs.unlinkSync(req.file.path);
@@ -58,6 +60,7 @@ export const createProduct = async (req, res) => {
       price,
       category,
       image: imageUrl,
+      imagePublicId,
       seller: req.user.id,
     });
 
@@ -72,6 +75,10 @@ export const createProduct = async (req, res) => {
 //Update product (Seller only)
 export const updateProduct = async (req, res) => {
   try {
+    const { title, description, price, category } = req.body;
+    let imageUrl;
+    let imagePublicId;
+
     const product = await Product.findById(req.params.id);
     if (!product)
       return res.status(404).json({ message: "Product not found!" });
@@ -79,9 +86,37 @@ export const updateProduct = async (req, res) => {
     if (req.user.id !== product.seller.toString())
       return res.status(403).json({ message: "Not authorized!" });
 
+    if (req.file) {
+      // Delete the previous image from Cloudinary
+      if (product?.imagePublicId) {
+        await cloudinary.uploader.destroy(product.imagePublicId);
+      }
+
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "products", // Cloudinary folder name
+      });
+
+      imageUrl = result.secure_url;
+      imagePublicId = result.public_id;
+
+      // Delete the locally stored file after upload
+      fs.unlinkSync(req.file.path);
+    }
+    const updatedFields = {
+      title,
+      description,
+      price,
+      category,
+    };
+    if (imageUrl && imagePublicId) {
+      updatedFields.image = imageUrl;
+      updatedFields.imagePublicId = imagePublicId;
+    }
+
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updatedFields,
       { new: true }
     );
     res.status(201).json(updatedProduct);

@@ -37,6 +37,14 @@ const SellerDashboard = () => {
     deleteAProduct(productId);
   };
 
+  const handleEdit = (product) => {
+    navigate("/editAd", {
+      state: {
+        product,
+      },
+    });
+  };
+
   return authUser?.role === "seller" ? (
     <div className="mx-auto p-4 min-h-screen">
       <div className="flex justify-between items-center mb-8">
@@ -80,11 +88,14 @@ const SellerDashboard = () => {
                   {product.category}
                 </p>
                 <div className="flex justify-between mt-4">
-                  <Link to={`/edit-ad/${product._id}`}>
-                    <button className="btn btn-primary btn-ghost">
-                      <Edit className="size-5" /> Edit
-                    </button>
-                  </Link>
+                  <button
+                    className="btn btn-primary btn-ghost"
+                    onClick={() => handleEdit(product)}
+                  >
+                    <Edit className="size-5" />
+                    Edit
+                  </button>
+
                   <button
                     className="btn btn-error btn-ghost"
                     onClick={() => handleDelete(product._id)}
