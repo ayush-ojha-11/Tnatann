@@ -39,6 +39,8 @@ export const useProductStore = create(
         try {
           set({ isLoading: true });
           const { data } = await axiosInstance.get("products/seller/products");
+          console.log(data);
+
           set({ productsOfASeller: data });
         } catch {
           toast.error("Error in fetching seller products!");
