@@ -38,10 +38,6 @@ const Products = () => {
 
   return (
     <div className="container min-h-screen mx-auto p-4">
-      <h2 className="text-xl font-bold text-base-content/80 mt-2 text-center">
-        {allProducts?.length === 0 ? "No Ads right now" : ""}
-      </h2>
-
       {/* Desktop View: Full Search Bar */}
       <div className="relative">
         <div className=" absolute z-10 flex items-center left-3 inset-y-0">
@@ -66,6 +62,10 @@ const Products = () => {
           {[...Array(6)].map((_, i) => (
             <Skeleton key={i} classname="w-full h-64 rounded-lg bg-base-200" />
           ))}
+        </div>
+      ) : filteredProducts?.length === 0 ? (
+        <div>
+          <h1 className="text-center">No Ads/Products</h1>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
