@@ -27,7 +27,7 @@ const Navbar = () => {
 
   if (!authUser) {
     return (
-      <nav className="navbar bg-base-200 text-base-content shadow-lg px-6">
+      <nav className="navbar text-base-content  px-6">
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
           <Link
@@ -99,7 +99,7 @@ const Navbar = () => {
   }
   if (authUser) {
     return (
-      <nav className="navbar bg-base-200 text-base-content shadow-lg px-6">
+      <nav className="navbar  text-base-content  px-6">
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="flex gap-2">

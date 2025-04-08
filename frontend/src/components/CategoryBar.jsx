@@ -13,7 +13,7 @@ const categories = [
 
 const CategoryBar = ({ activeCategory, setActiveCategory }) => {
   return (
-    <div className="overflow-x-auto whitespace-nowrap p-2 flex gap-2 bg-base-200 rounded-md mb-4">
+    <div className="overflow-x-auto whitespace-nowrap p-2 flex gap-2 rounded-md mb-5 mt-5">
       {categories.map((category) => (
         <button
           key={category}
