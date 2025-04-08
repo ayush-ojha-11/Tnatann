@@ -24,11 +24,15 @@ export const useProductStore = create(
         }
       },
 
-      fetchOtherProducts: async (currentProductId) => {
+      // Related products
+      fetchOtherProducts: async (product) => {
         try {
           const { data } = await axiosInstance.get("/products");
           set({
-            otherProducts: data.filter((item) => item._id !== currentProductId),
+            otherProducts: data.filter(
+              (item) =>
+                item.category === product.category && item._id !== product._id
+            ),
           });
         } catch {
           console.log("Failed to load other products!");

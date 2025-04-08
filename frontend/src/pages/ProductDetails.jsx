@@ -6,6 +6,7 @@ import { useProductStore } from "../store/useProductStore.js";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import RelatedProducts from "../components/RelatedProducts.jsx";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const ProductDetails = () => {
       try {
         const { data } = await axiosInstance.get(`/products/${id}`);
         setProduct(data);
-        fetchOtherProducts(id);
+        fetchOtherProducts(data);
       } catch (error) {
         console.log("Error: ", error.message);
         toast.error(error.response.data.message);
@@ -79,34 +80,18 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {otherProducts && (
-        <div className="mt-8">
-          <h3 className="text-lg font-semibold mb-4">Other Products</h3>
-          <Carousel
-            showArrows={true}
-            showThumbs={false}
-            infiniteLoop={true}
-            autoPlay={true}
-            interval={2000}
-          >
-            {otherProducts.map((item) => (
-              <div key={item._id} className="p-10 shadow rounded-lg h-auto">
-                <Link to={`/products/${item._id}`}>
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-40 object-contain rounded"
-                  />
-                  <h4 className="text-base-content font-semibold mt-2">
-                    {item.title}
-                  </h4>
-                  <p className="text-primary font-bold">₹{item.price}</p>
-                </Link>
-              </div>
-            ))}
-          </Carousel>
+      <div className="p-15">
+        <h1 className="mt-10 text-center">
+          {otherProducts?.length === 0
+            ? "No related products"
+            : "Related products/ads:"}
+        </h1>
+        <div className="grid grid-cols-2 lg:grid-cols-5">
+          {otherProducts?.map((product) => (
+            <RelatedProducts product={product} />
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
