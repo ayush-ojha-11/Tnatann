@@ -141,9 +141,7 @@ const Home = () => {
             <div key={index} className="p-4 bg-base-300 shadow rounded-lg">
               <p className="text-lg">"{user.review}"</p>
               <p className="text-yellow-500 mt-2 flex justify-center">
-                {Array(user.rating).fill(
-                  <Star size={16} key={user.rating++} />
-                )}
+                {Array(user.rating).fill(<Star size={16} />)}
               </p>
               <h3 className="font-semibold mt-2">{user.name}</h3>
             </div>

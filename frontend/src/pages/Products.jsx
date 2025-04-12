@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
 import { useNavigate } from "react-router-dom";
-import { useProductStore } from "../store/useProductStore.js";
+
 import Skeleton from "../components/skeletons/Skeleton";
 import ProductCard from "../components/ProductCard";
 import CategoryBar from "../components/CategoryBar.jsx";
 import { Search } from "lucide-react";
+import { useAdminStore } from "../store/useAdminStore.js";
 
 const Products = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthStore();
-  const { allProducts, isLoading, fetchProducts } = useProductStore();
+  const { allProducts, isLoading, fetchProducts } = useAdminStore();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -21,8 +22,11 @@ const Products = () => {
   }, [authUser, navigate]);
 
   useEffect(() => {
-    if (!allProducts) fetchProducts();
-  }, [allProducts, fetchProducts]);
+    if (!allProducts) {
+      fetchProducts();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   let filteredProducts =
     activeCategory === "All"

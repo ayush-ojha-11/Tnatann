@@ -6,7 +6,14 @@ const App = () => {
   const location = useLocation();
 
   const renderNavbar = () => {
-    if (location.pathname === "/seller-dashboard") return;
+    if (
+      location.pathname === "/seller-dashboard" ||
+      location.pathname === "/admin" ||
+      location.pathname === "/admin/users" ||
+      location.pathname === "/admin/products" ||
+      location.pathname === "/admin/sellers"
+    )
+      return;
     else return <Navbar />;
   };
   return (

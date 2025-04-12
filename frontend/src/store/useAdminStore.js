@@ -1,17 +1,23 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import { axiosInstance } from "../lib/axios";
-import toast from "react-hot-toast";
+import { devtools } from "zustand/middleware";
 
-export const useProductStore = create(
-  persist(
-    (set) => ({
+import toast from "react-hot-toast";
+export const useAdminStore = create(
+  devtools(
+    (set, get) => ({
+      stats: null,
+      loading: false,
+      sellers: null,
+      users: null,
       allProducts: null,
       productsOfASeller: null,
       isLoading: false,
       isUpdating: false,
       isDeleting: false,
       otherProducts: null,
+
+      // anyone can access
       fetchProducts: async () => {
         set({ isLoading: true });
         try {
@@ -23,8 +29,7 @@ export const useProductStore = create(
           set({ isLoading: false });
         }
       },
-
-      // Related products
+      // anyone
       fetchOtherProducts: async (product) => {
         try {
           const { data } = await axiosInstance.get("/products");
@@ -38,13 +43,12 @@ export const useProductStore = create(
           console.log("Failed to load other products!");
         }
       },
-
+      // seller or admin
       fetchProductsOfSeller: async () => {
         try {
           set({ isLoading: true });
           const { data } = await axiosInstance.get("products/seller/products");
           console.log(data);
-
           set({ productsOfASeller: data });
         } catch {
           toast.error("Error in fetching seller products!");
@@ -52,7 +56,7 @@ export const useProductStore = create(
           set({ isLoading: false });
         }
       },
-
+      // seller or admin
       deleteAProduct: async (productId) => {
         try {
           set({ isDeleting: true });
@@ -63,7 +67,6 @@ export const useProductStore = create(
             const updatedProducts = (state.allProducts || []).filter(
               (item) => item._id !== productId
             );
-
             const updatedSellerProducts = (
               state.productsOfASeller || []
             ).filter((item) => item._id !== productId);
@@ -82,7 +85,7 @@ export const useProductStore = create(
           set({ isDeleting: false });
         }
       },
-
+      // seller only
       updateProduct: async (product, formDataObj) => {
         try {
           set({ isUpdating: true });
@@ -117,7 +120,100 @@ export const useProductStore = create(
           set({ isUpdating: false });
         }
       },
+
+      // all the functions below are only for admin access
+      fetchAdminStats: async () => {
+        set({ loading: true });
+        try {
+          const { data } = await axiosInstance.get("/admin/stats");
+          set({ stats: data });
+        } catch (error) {
+          toast.error(error.response?.data?.message);
+        } finally {
+          set({ loading: false });
+        }
+      },
+
+      fetchUsers: async () => {
+        try {
+          set({ loading: true });
+          const { data } = await axiosInstance.get("/admin/users");
+          set({ users: data });
+        } catch (error) {
+          toast.error(error.response.data.message);
+        } finally {
+          set({ loading: false });
+        }
+      },
+
+      fetchSellers: async () => {
+        try {
+          set({ loading: true });
+          const { data } = await axiosInstance.get("/admin/sellers");
+          set({ sellers: data });
+        } catch (error) {
+          toast.error(error.response.data.message);
+        } finally {
+          set({ loading: false });
+        }
+      },
+      deleteUser: async (currentUser) => {
+        try {
+          set({ loading: true });
+
+          // ✅ Remove products of deleted seller (from local store)
+          if (currentUser.role === "seller") {
+            get().deleteProductsOfSeller(currentUser._id);
+
+            const updatedProducts = (get().allProducts || []).filter(
+              (product) =>
+                (typeof product.seller === "string"
+                  ? product.seller
+                  : product.seller?._id
+                )?.toString() !== currentUser._id.toString()
+            );
+            set({
+              allProducts: updatedProducts,
+            });
+            console.log(updatedProducts);
+          }
+
+          // delete user from database
+          const res = await axiosInstance.delete(
+            `/admin/users/${currentUser._id}`
+          );
+          toast.success(res.data.message);
+
+          // update users locally in the store
+          const updatedUsers = get().users?.filter(
+            (user) => user._id !== currentUser._id
+          );
+          const updatedSellers = get().sellers?.filter(
+            (seller) => seller._id !== currentUser._id
+          );
+
+          set({
+            users: updatedUsers,
+            sellers: updatedSellers,
+          });
+
+          //refetch stats after deletion
+          await get().fetchAdminStats();
+        } catch (error) {
+          toast.error(error?.response?.data?.message);
+        } finally {
+          set({ loading: false });
+        }
+      },
+      deleteProductsOfSeller: async (id) => {
+        try {
+          const res = await axiosInstance.delete(`/admin/seller/${id}`);
+          toast.success(res.data.message);
+        } catch (error) {
+          toast.error(error.response.data.message);
+        }
+      },
     }),
-    { name: "product-store" }
+    { name: "central-store" }
   )
 );

@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Edit, LogOut, Trash } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore.js";
-import { useProductStore } from "../store/useProductStore.js";
+
+import { useAdminStore } from "../store/useAdminStore.js";
 
 const SellerDashboard = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const SellerDashboard = () => {
     isLoading,
     fetchProductsOfSeller,
     productsOfASeller,
-  } = useProductStore();
+  } = useAdminStore();
 
   useEffect(() => {
     if (!authUser) {

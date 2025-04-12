@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-import { useProductStore } from "../store/useProductStore.js";
+
 import { useAuthStore } from "../store/useAuthStore.js";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import RelatedProducts from "../components/RelatedProducts.jsx";
+import { useAdminStore } from "../store/useAdminStore.js";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { otherProducts, fetchOtherProducts } = useProductStore();
+  const { otherProducts, fetchOtherProducts } = useAdminStore();
 
   useEffect(() => {
     if (!authUser) {

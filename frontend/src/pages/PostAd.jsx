@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
-import { useProductStore } from "../store/useProductStore";
+import { useAdminStore } from "../store/useAdminStore";
 
 const categories = [
   "Electronics",
@@ -24,7 +24,7 @@ const PostAd = () => {
     image: null,
   });
   const [loading, setLoading] = useState(false);
-  const { fetchProducts } = useProductStore();
+  const { fetchProducts } = useAdminStore();
 
   // Handle form input changes
   const handleChange = (e) => {

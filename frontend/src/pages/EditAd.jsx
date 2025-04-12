@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useProductStore } from "../store/useProductStore";
+
 import toast from "react-hot-toast";
+import { useAdminStore } from "../store/useAdminStore";
 
 const EditAd = () => {
   const categories = [
@@ -22,7 +23,7 @@ const EditAd = () => {
     category: "",
     image: null,
   });
-  const { isUpdating, updateProduct } = useProductStore();
+  const { isUpdating, updateProduct } = useAdminStore();
 
   // received data from seller-dashboard (product to be edited)
   const { state } = useLocation();

@@ -13,6 +13,11 @@ import SellerDashboard from "./pages/SellerDashboard.jsx";
 import About from "./pages/About.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
 import EditAd from "./pages/EditAd.jsx";
+import AdminLayout from "./pages/admin/AdminLayout.jsx";
+import ManageUsers from "./pages/admin/ManageUsers.jsx";
+import ManageProducts from "./pages/admin/ManageProducts.jsx";
+import ManageSellers from "./pages/admin/ManageSellers.jsx";
+import AdminHome from "./pages/admin/AdminHome.jsx";
 
 const appRouter = createBrowserRouter([
   {
@@ -59,6 +64,34 @@ const appRouter = createBrowserRouter([
       {
         path: "editAd",
         element: <EditAd />,
+      },
+      {
+        path: "admin",
+        element: <ProtectedRoute role="admin" />,
+        children: [
+          {
+            path: "",
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "",
+                element: <AdminHome />,
+              },
+              {
+                path: "users",
+                element: <ManageUsers />,
+              },
+              {
+                path: "products",
+                element: <ManageProducts />,
+              },
+              {
+                path: "sellers",
+                element: <ManageSellers />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
