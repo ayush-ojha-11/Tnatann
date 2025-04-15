@@ -127,7 +127,7 @@ const SellerDashboard = () => {
       )}
     </div>
   ) : (
-    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-100 px-6 md:px-20 py-14">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-200 px-6 md:px-20 py-14 space-x-10">
       {/* Left Section */}
       <div className="flex flex-col justify-center items-center text-center space-y-8">
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
@@ -141,7 +141,7 @@ const SellerDashboard = () => {
         <div className="w-full max-w-sm space-y-4">
           <input
             type="text"
-            placeholder="Enter phone number"
+            placeholder="Phone number (e.g., +91 98765 01010)"
             value={phoneData.phone}
             onChange={(e) =>
               setPhoneData({ ...phoneData, phone: e.target.value })

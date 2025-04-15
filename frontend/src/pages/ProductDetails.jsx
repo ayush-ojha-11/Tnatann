@@ -6,6 +6,7 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import RelatedProducts from "../components/RelatedProducts.jsx";
 import { useAdminStore } from "../store/useAdminStore.js";
+import { motion } from "framer-motion";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const { otherProducts, fetchOtherProducts } = useAdminStore();
+  const [showContact, setShowContact] = useState(false);
 
   useEffect(() => {
     if (!authUser) {
@@ -69,12 +71,41 @@ const ProductDetails = () => {
           </div>
 
           <div className="w-full mt-8 md:mt-4">
-            <a
-              href={`mailto:${product.seller.email}`}
+            <button
               className=" btn btn-primary w-full h-10 cursor-pointer rounded-lg"
+              onClick={() => setShowContact(!showContact)}
             >
               Contact Seller - {product.seller.name}
-            </a>
+            </button>
+
+            {/* animation */}
+
+            {showContact && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-4 p-4 border border-gray-200 rounded-xl bg-white shadow-sm text-gray-800"
+              >
+                <h3 className="text-lg font-semibold mb-2">
+                  Seller Contact Info
+                </h3>
+                <div className="space-y-1 text-sm">
+                  <p>
+                    <span className="font-medium">Name:</span>{" "}
+                    {product.seller.name}
+                  </p>
+                  <p>
+                    <span className="font-medium">Email:</span>{" "}
+                    {product.seller.email}
+                  </p>
+                  <p>
+                    <span className="font-medium">Phone:</span>{" "}
+                    {product.seller.phone}
+                  </p>
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
