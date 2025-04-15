@@ -10,7 +10,7 @@ export const getProducts = async (req, res) => {
       .populate("seller", "name email location");
     res.status(200).json(products);
   } catch (error) {
-    console.log("Erron in productController (getProducts) ", error.message);
+    console.log("Error in productController (getProducts) ", error.message);
     res.status(500).json({ message: "Internal server error!" });
   }
 };

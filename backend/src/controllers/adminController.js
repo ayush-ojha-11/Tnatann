@@ -1,7 +1,6 @@
 import User from "../models/User.js";
 import Product from "../models/Product.js";
 import cloudinary from "../config/cloudinary.js";
-import fs from "fs";
 
 //Get all users
 export const getUsers = async (req, res) => {

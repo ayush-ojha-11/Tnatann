@@ -49,9 +49,9 @@ export const useAuthStore = create(
             toast.error(error.response?.data?.message);
           }
         },
-        changeRole: async () => {
+        changeRole: async (data) => {
           try {
-            const res = await axiosInstance.put("/auth/changerole");
+            const res = await axiosInstance.put("/auth/changerole", data);
             set({ authUser: res.data });
             toast.success("Role changed successfully.");
           } catch {

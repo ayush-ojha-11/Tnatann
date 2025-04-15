@@ -16,6 +16,8 @@ export const useAdminStore = create(
       isUpdating: false,
       isDeleting: false,
       otherProducts: null,
+      currentPage: 1,
+      totalPages: null,
 
       // anyone can access
       fetchProducts: async () => {
@@ -210,6 +212,23 @@ export const useAdminStore = create(
           toast.success(res.data.message);
         } catch (error) {
           toast.error(error.response.data.message);
+        }
+      },
+      fetchPaginatedProducts: async (page = 1, limit = 10) => {
+        set({ isLoading: true });
+        try {
+          const { data } = await axiosInstance.get(
+            `/products?page=${page}&limit=${limit}`
+          );
+          set((state) => ({
+            allProducts: [...(state.allProducts || []), ...data.products],
+            totalPages: data.totalPages,
+            currentPage: data.currentPage,
+          }));
+        } catch {
+          toast.error("Error fetching paginated products!");
+        } finally {
+          set({ isLoading: false });
         }
       },
     }),

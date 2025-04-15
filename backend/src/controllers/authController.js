@@ -82,11 +82,12 @@ export const logout = async (req, res) => {
 };
 export const changeRole = async (req, res) => {
   try {
+    const { phone } = req.body;
     const role = "seller";
     const userId = req.user._id;
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { role: role },
+      { role: role, phone: phone },
       { new: true }
     );
     res.status(200).json(updatedUser);
