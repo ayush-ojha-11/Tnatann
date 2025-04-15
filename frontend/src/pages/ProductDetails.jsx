@@ -6,6 +6,7 @@ import { useAuthStore } from "../store/useAuthStore.js";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import RelatedProducts from "../components/RelatedProducts.jsx";
 import { useAdminStore } from "../store/useAdminStore.js";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
 const ProductDetails = () => {
