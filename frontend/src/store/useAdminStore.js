@@ -160,7 +160,6 @@ export const useAdminStore = create(
       deleteUser: async (currentUser) => {
         try {
           set({ loading: true });
-
           // ✅ Remove products of deleted seller (from local store)
           if (currentUser.role === "seller") {
             get().deleteProductsOfSeller(currentUser._id);

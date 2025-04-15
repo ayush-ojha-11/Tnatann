@@ -5,7 +5,9 @@ import fs from "fs";
 //Get all products
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("seller", "name email");
+    const products = await Product.find()
+      .sort({ createdAt: -1 })
+      .populate("seller", "name email");
     res.status(200).json(products);
   } catch (error) {
     console.log("Erron in productController (getProducts) ", error.message);

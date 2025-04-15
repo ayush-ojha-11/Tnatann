@@ -8,7 +8,7 @@ const ManageUsers = () => {
     fetchUsers();
   }, []);
 
-  const handleDeleteUser = (id) => {
+  const handleDeleteUser = (user) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -19,7 +19,7 @@ const ManageUsers = () => {
       confirmButtonText: "Yes, delete user!",
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteUser(id);
+        deleteUser(user);
       }
     });
   };

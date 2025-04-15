@@ -1,14 +1,29 @@
 import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 import { useAdminStore } from "../../store/useAdminStore";
 
 const ManageSellers = () => {
-  const { stats, loading, fetchSellers, sellers } = useAdminStore();
+  const { stats, loading, fetchSellers, sellers, deleteUser } = useAdminStore();
 
   useEffect(() => {
     fetchSellers();
   }, []);
 
-  const handleDeleteSeller = () => {};
+  const handleDeleteSeller = (seller) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete user!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUser(seller);
+      }
+    });
+  };
 
   return (
     <div>
@@ -30,7 +45,7 @@ const ManageSellers = () => {
                   <p className="text-sm text-base-content/50">{seller.email}</p>
                 </div>
                 <button
-                  onClick={() => handleDeleteSeller(seller._id)}
+                  onClick={() => handleDeleteSeller(seller)}
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm"
                 >
                   Delete
