@@ -4,7 +4,7 @@ import { generateToken } from "../lib/utils.js";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, location } = req.body;
     if (!name.trim() || !email.trim() || !password.trim()) {
       return res.status(400).json({ message: "All fields are required!" });
     }
@@ -20,6 +20,7 @@ export const register = async (req, res) => {
       email,
       password: hashedPassword,
       role,
+      location,
     });
 
     if (newUser) {
@@ -32,6 +33,7 @@ export const register = async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
+        location: newUser.location,
       });
     }
   } catch (error) {

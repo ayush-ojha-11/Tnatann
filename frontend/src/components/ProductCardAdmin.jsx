@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { MapPin } from "lucide-react";
+import { MapPin, Trash } from "lucide-react";
+import { useAdminStore } from "../store/useAdminStore";
+const ProductCardAdmin = ({ product }) => {
+  const { deleteAProduct, isDeleting } = useAdminStore();
 
-const ProductCard = ({ product }) => {
-  const navigate = useNavigate();
   return (
     <div className="bg-base-300 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <img
@@ -12,7 +12,10 @@ const ProductCard = ({ product }) => {
       />
       <div className="p-4">
         <h3 className="text-lg font-bold">{product.title}</h3>
-        <p className="text-base-content/70 text-sm">{product.category}</p>
+        <p className="text-base-content/70 text-sm">
+          Seller: {product.seller.name}
+        </p>
+
         <div className="flex justify-between">
           <p className="text-green-600 font-medium mt-3">
             <span className="text-base-content">Price -</span> ₹{product.price}
@@ -23,14 +26,22 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
         <button
-          onClick={() => navigate(`/products/${product._id}`)}
-          className="btn btn-primary btn-sm mt-3 w-full"
+          onClick={() => {
+            deleteAProduct(product._id);
+          }}
+          disabled={isDeleting}
+          className="btn bg-red-600 hover:bg-red-700 text-white text-sm mt-3 w-full"
         >
-          View details
+          {isDeleting ? (
+            "Deleting product..."
+          ) : (
+            <>
+              <Trash className="size-5" /> Delete
+            </>
+          )}
         </button>
       </div>
     </div>
   );
 };
-
-export default ProductCard;
+export default ProductCardAdmin;

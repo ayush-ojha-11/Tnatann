@@ -30,14 +30,16 @@ export const getSellers = async (req, res) => {
 // Get all products
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("seller", "name email");
+    const products = await Product.find().populate(
+      "seller",
+      "name email location"
+    );
     res.status(200).json(products);
   } catch {
     console.log("Error in admin controller", error.message);
     res.status(500).json({ message: "Internal server error!" });
   }
 };
-
 // Delete user (Admin only)
 export const deleteUser = async (req, res) => {
   try {

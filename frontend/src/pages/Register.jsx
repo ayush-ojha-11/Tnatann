@@ -1,6 +1,6 @@
 import { useAuthStore } from "../store/useAuthStore.js";
 import { Link, useNavigate } from "react-router-dom";
-import { Eye, EyeOff, Lock, Loader2, User2, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Loader2, User2, Mail, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
 import AuthImagePattern from "../components/skeletons/AuthImagePattern.jsx";
 import { useEffect, useState } from "react";
@@ -20,13 +20,15 @@ export const Register = () => {
     name: "",
     email: "",
     password: "",
+    location: "",
   });
 
   const validateForm = () => {
     if (
       !formData.name.trim() ||
       !formData.email.trim() ||
-      !formData.password.trim()
+      !formData.password.trim() ||
+      !formData.location.trim()
     ) {
       return toast.error("All fields are required!");
     }
@@ -131,6 +133,29 @@ export const Register = () => {
                     <EyeOff className="size-5 text-base-content/40" />
                   )}
                 </button>
+              </div>
+            </div>
+
+            {/* location */}
+
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Location</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-3 flex items-center z-10">
+                  <MapPin className="size-5" />
+                </div>
+
+                <input
+                  type="text"
+                  className="input input-bordered w-full pl-10 relative"
+                  placeholder="Enter your location (City name)"
+                  value={formData.location}
+                  onChange={(e) =>
+                    setFormData({ ...formData, location: e.target.value })
+                  }
+                />
               </div>
             </div>
 
