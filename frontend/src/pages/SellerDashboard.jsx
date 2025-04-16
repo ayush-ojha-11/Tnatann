@@ -127,9 +127,9 @@ const SellerDashboard = () => {
       )}
     </div>
   ) : (
-    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-200 px-6 md:px-20 py-14 space-x-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-200 px-6 md:px-20 py-14 gap-x-10">
       {/* Left Section */}
-      <div className="flex flex-col justify-center items-center text-center space-y-8">
+      <div className="flex flex-col justify-center items-center text-center space-y-8 w-full">
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
           Want to become a <span className="text-primary">Seller</span>?
         </h1>
@@ -158,7 +158,7 @@ const SellerDashboard = () => {
       </div>
 
       {/* Right Section */}
-      <div className="hidden md:flex flex-col justify-center items-center space-y-10">
+      <div className="hidden md:flex flex-col justify-center items-center space-y-10 w-full">
         <img
           src="seller.svg"
           alt="Seller Illustration"
