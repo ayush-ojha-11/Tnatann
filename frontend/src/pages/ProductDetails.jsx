@@ -19,9 +19,7 @@ const ProductDetails = () => {
   const [showContact, setShowContact] = useState(false);
 
   useEffect(() => {
-    if (!authUser) {
-      navigate("/login");
-    }
+    if (!authUser) navigate("/login");
   }, [authUser, navigate]);
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const ProductDetails = () => {
         setProduct(data);
         fetchOtherProducts(data);
       } catch (error) {
-        console.log("Error: ", error.message);
+        console.error("Error: ", error.message);
         toast.error(error.response.data.message);
       } finally {
         setLoading(false);
@@ -53,45 +51,54 @@ const ProductDetails = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 min-h-screen">
-      <div className=" flex max-w-5xl mx-auto  rounded-lg overflow-hidden ">
-        <div className="p-2 flex items-center justify-center">
+    <div className="container mx-auto px-4 py-6 min-h-screen">
+      {/* Product Content */}
+      <div className="flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto bg-base-300 shadow-md rounded-xl overflow-hidden p-4 md:p-6">
+        <div className="flex-1 flex items-center justify-center">
           <img
             src={product.image}
             alt={product.title}
-            className="w-full h-25 md:h-64 object-contain"
+            className="w-full max-w-sm h-auto object-contain rounded-xl"
           />
         </div>
-        <div className="p-6 flex flex-col justify-between w-full">
+
+        <div className="flex-1 flex flex-col justify-between">
           <div>
-            <h2 className="text-2xl font-bold">{product.title}</h2>
-            <p className="text-sm">{product.category}</p>
-            <p className="mt-2 mb-6">₹{product.price}</p>
-            <h2 className="font-semibold">Description</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-base-content">
+              {product.title}
+            </h2>
+            <p className="text-sm text-base-content/70 mt-1">
+              {product.category}
+            </p>
+            <p className="mt-2 mb-4 text-xl font-semibold text-green-600">
+              ₹{product.price}
+            </p>
+
+            <h3 className="font-semibold mb-1 text-base-content">
+              Description
+            </h3>
             <p className="text-sm text-base-content">{product.description}</p>
           </div>
 
-          <div className="w-full mt-8 md:mt-4">
+          <div className="mt-6">
             <button
-              className=" btn btn-primary w-full h-10 cursor-pointer rounded-lg"
+              className="btn btn-primary w-full h-10 rounded-lg"
               onClick={() => setShowContact(!showContact)}
             >
               Contact Seller - {product.seller.name}
             </button>
-
-            {/* animation */}
 
             {showContact && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="mt-4 p-4 border border-gray-200 rounded-xl bg-white shadow-sm text-gray-800"
+                className="mt-4 p-4 border border-gray-200 rounded-xl bg-gray-50 shadow-sm"
               >
-                <h3 className="text-lg font-semibold mb-2">
+                <h3 className="text-lg text-black font-semibold mb-2">
                   Seller Contact Info
                 </h3>
-                <div className="space-y-1 text-sm">
+                <div className="space-y-1 text-sm text-gray-700">
                   <p>
                     <span className="font-medium">Name:</span>{" "}
                     {product.seller.name}
@@ -111,15 +118,17 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="p-15">
-        <h1 className="mt-10 text-center">
+      {/* Related Products */}
+      <div className="mt-10">
+        <h2 className="text-xl font-semibold text-center mb-6">
           {otherProducts?.length === 0
             ? "No related products"
-            : "Related products/ads:"}
-        </h1>
-        <div className="grid grid-cols-2 lg:grid-cols-5">
+            : "Related Products"}
+        </h2>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {otherProducts?.map((product) => (
-            <RelatedProducts product={product} />
+            <RelatedProducts key={product._id} product={product} />
           ))}
         </div>
       </div>
