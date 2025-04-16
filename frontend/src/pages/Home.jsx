@@ -33,6 +33,11 @@ const Home = () => {
       price: "₹100000",
       img: "/mpm1.png",
     },
+    {
+      title: "Apache 160 4v",
+      price: "₹65000",
+      img: "/bike.png",
+    },
   ];
 
   const testimonials = [
