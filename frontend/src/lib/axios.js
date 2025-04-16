@@ -1,5 +1,5 @@
 import axios from "axios";
 export const axiosInstance = axios.create({
-  baseURL: "http://localhost:5002/api",
+  baseURL: "https://tnatann-backend.onrender.com/api",
   withCredentials: true,
 });
