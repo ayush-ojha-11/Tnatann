@@ -18,26 +18,10 @@ const Home = () => {
   ];
 
   const featuredListings = [
-    {
-      title: "iPhone 13 Pro",
-      price: "₹90000",
-      img: "/iphone13pro.png",
-    },
-    {
-      title: "Harry Potter",
-      price: "₹35000",
-      img: "/hp.jpg",
-    },
-    {
-      title: "MacBook Pro M1",
-      price: "₹100000",
-      img: "/mpm1.png",
-    },
-    {
-      title: "Apache 160 4v",
-      price: "₹65000",
-      img: "/bike.png",
-    },
+    { title: "iPhone 13 Pro", price: "₹90000", img: "/iphone13pro.png" },
+    { title: "Harry Potter", price: "₹35000", img: "/hp.jpg" },
+    { title: "MacBook Pro M1", price: "₹100000", img: "/mpm1.png" },
+    { title: "Apache 160 4v", price: "₹65000", img: "/bike.png" },
   ];
 
   const testimonials = [
@@ -54,59 +38,65 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    if (authUser) {
-      navigate("/products");
-    }
+    if (authUser) navigate("/products");
   }, [authUser, navigate]);
 
   return (
-    <div className={`min-h-screen text-base-content`}>
+    <div className="min-h-screen text-base-content">
       {/* 🎯 Hero Section */}
-      <header className="text-center py-16">
-        <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold leading-[1.1]">
+      <header className="text-center py-16 px-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
           Buy & Sell Anything, Anytime!
           <br />
-          <span className="bg-gradient-to-r from-pink-500 via-indigo-600 to-pink-500 p-1 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-pink-500 via-indigo-600 to-pink-500 bg-clip-text text-transparent">
             with {APP_NAME}
           </span>
         </h1>
-
-        {/* CTA Buttons */}
-        <div className="mt-6 flex justify-center space-x-4">
+        <div className="mt-6 flex justify-center">
           <button
-            className="bg-blue-500 px-6 py-3 text-white rounded-lg flex items-center cursor-pointer"
+            className="bg-blue-500 hover:bg-blue-600 transition px-6 py-3 text-white rounded-lg flex items-center gap-2 shadow-lg"
             onClick={() => navigate("/login")}
           >
-            <User className="mr-2" /> Get Started
+            <User size={18} /> Get Started
           </button>
         </div>
       </header>
 
       {/* 🛒 Categories */}
-      <section className="text-center py-12 px-8">
-        <h2 className="text-3xl font-semibold">Explore Categories</h2>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-6 mt-6">
+      <section className="text-center py-12 px-4">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+          Explore Categories
+        </h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
           {categories.map((cat, index) => (
-            <div key={index} className="p-4 bg-base-300 shadow rounded-lg">
-              <span className="text-3xl">{cat.icon}</span>
-              <p className="mt-2">{cat.name}</p>
+            <div
+              key={index}
+              className="bg-base-200 p-4 rounded-lg shadow hover:scale-105 transition"
+            >
+              <div className="text-4xl">{cat.icon}</div>
+              <p className="mt-2 font-medium">{cat.name}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* 🔥 Featured Listings */}
-      <section className="text-center py-12">
-        <h2 className="text-3xl font-semibold">Featured Listings</h2>
-        <div className="flex flex-wrap items-center justify-center">
+      <section className="text-center py-12 px-4">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+          Featured Listings
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {featuredListings.map((product, index) => (
-            <div key={index} className="p-4 bg-base-300 shadow rounded-lg m-6">
+            <div
+              key={index}
+              className="bg-base-200 p-4 rounded-lg shadow hover:shadow-lg transition"
+            >
               <img
                 src={product.img}
                 alt={product.title}
-                className="w-40 h-40 object-contain rounded"
+                className="w-full h-40 object-contain rounded"
               />
-              <h3 className="text-lg mt-2">{product.title}</h3>
+              <h3 className="text-lg mt-3 font-semibold">{product.title}</h3>
               <p className="text-green-600 font-bold">{product.price}</p>
             </div>
           ))}
@@ -114,40 +104,47 @@ const Home = () => {
       </section>
 
       {/* ✅ How It Works */}
-      <section className="text-center py-12 px-8">
-        <h2 className="text-3xl font-semibold">How It Works</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-          <div className="p-4 bg-base-300 shadow rounded-lg">
-            <h3 className="text-lg font-semibold">1️⃣ Create an Account</h3>
-            <p className="text-base-content">Sign up and start posting ads.</p>
-          </div>
-          <div className="p-4 bg-base-300 shadow rounded-lg">
-            <h3 className="text-lg font-semibold">2️⃣ Post Your Ad</h3>
-            <p className=" text-base-content">
-              Add images and details to attract buyers.
-            </p>
-          </div>
-          <div className="p-4 bg-base-300 shadow rounded-lg">
-            <h3 className="text-lg font-semibold">
-              3️⃣ Get Buyers & Sell Fast!
-            </h3>
-            <p className="text-base-content">
-              Negotiate and complete transactions securely.
-            </p>
-          </div>
+      <section className="text-center py-12 px-4">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+          How It Works
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            {
+              title: "1️⃣ Create an Account",
+              desc: "Sign up and start posting ads.",
+            },
+            {
+              title: "2️⃣ Post Your Ad",
+              desc: "Add images and details to attract buyers.",
+            },
+            {
+              title: "3️⃣ Get Buyers & Sell Fast!",
+              desc: "Negotiate and complete transactions securely.",
+            },
+          ].map((step, i) => (
+            <div key={i} className="bg-base-200 p-6 rounded-lg shadow">
+              <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+              <p>{step.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* 💬 Testimonials */}
-      <section className="text-center py-12 bg-base-300">
-        <h2 className="text-3xl font-semibold">What Our Users Say</h2>
-        <div className="flex justify-center space-x-6 mt-6">
+      <section className="text-center py-12 px-4 bg-base-200">
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+          What Our Users Say
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {testimonials.map((user, index) => (
-            <div key={index} className="p-4 bg-base-300 shadow rounded-lg">
-              <p className="text-lg">"{user.review}"</p>
-              <p className="text-yellow-500 mt-2 flex justify-center">
-                {Array(user.rating).fill(<Star size={16} />)}
-              </p>
+            <div key={index} className="p-6 bg-base-100 rounded-lg shadow">
+              <p className="text-lg italic">"{user.review}"</p>
+              <div className="flex justify-center mt-2 text-yellow-500">
+                {Array.from({ length: user.rating }).map((_, i) => (
+                  <Star key={i} size={16} fill="currentColor" stroke="none" />
+                ))}
+              </div>
               <h3 className="font-semibold mt-2">{user.name}</h3>
             </div>
           ))}
