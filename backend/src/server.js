@@ -36,5 +36,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/admin", adminRoutes);
 
+// Serve static files
+app.use(express.static(path.join(__dirname, "client/build"))); // or your frontend path
+
+// React Router fallback
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
+
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => console.log(`Server running on Port ${PORT}`));
