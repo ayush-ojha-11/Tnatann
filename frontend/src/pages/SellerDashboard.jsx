@@ -20,8 +20,6 @@ const SellerDashboard = () => {
     productsOfASeller,
   } = useAdminStore();
 
-  console.log(phoneData.phone);
-
   useEffect(() => {
     if (!authUser) {
       navigate("/login");
@@ -61,12 +59,15 @@ const SellerDashboard = () => {
   return authUser?.role === "seller" ? (
     <div className="mx-auto p-4 min-h-screen">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="md:text-xl font-bold">Seller Dashboard</h2>
-        <div className="space-x-3">
-          <Link to="/post-ad" className="btn btn-primary">
+        <h2 className="text-sm md:text-xl font-bold">Seller Dashboard</h2>
+        <div className="space-x-2">
+          <Link to="/post-ad" className="btn btn-primary btn-sm md:btn-md">
             Post new Ad
           </Link>
-          <button className="btn btn-error" onClick={() => logout()}>
+          <button
+            className="btn btn-error btn-sm md:btn-md"
+            onClick={() => logout()}
+          >
             Logout <LogOut className="size-5" />
           </button>
         </div>
@@ -127,9 +128,9 @@ const SellerDashboard = () => {
       )}
     </div>
   ) : (
-    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-200 px-6 md:px-20 py-14 gap-x-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen bg-gradient-to-br from-white via-slate-50 to-slate-200 px-6 md:px-20 py-14 gap-10 justify-items-center">
       {/* Left Section */}
-      <div className="flex flex-col justify-center items-center text-center space-y-8 w-full">
+      <div className="flex flex-col justify-center items-center text-center space-y-8">
         <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
           Want to become a <span className="text-primary">Seller</span>?
         </h1>
@@ -158,7 +159,7 @@ const SellerDashboard = () => {
       </div>
 
       {/* Right Section */}
-      <div className="hidden md:flex flex-col justify-center items-center space-y-10 w-full">
+      <div className="hidden md:flex flex-col justify-center items-center space-y-10">
         <img
           src="seller.svg"
           alt="Seller Illustration"

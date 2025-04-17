@@ -1,7 +1,9 @@
 import { MapPin, Trash } from "lucide-react";
 import { useAdminStore } from "../store/useAdminStore";
+import { useState } from "react";
 const ProductCardAdmin = ({ product }) => {
-  const { deleteAProduct, isDeleting } = useAdminStore();
+  const { deleteAProduct } = useAdminStore();
+  const [deletingProductId, setDeletingProductId] = useState(null);
 
   return (
     <div className="bg-base-300 shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -26,13 +28,15 @@ const ProductCardAdmin = ({ product }) => {
           </span>
         </div>
         <button
-          onClick={() => {
-            deleteAProduct(product._id);
+          onClick={async () => {
+            setDeletingProductId(product._id);
+            await deleteAProduct(product._id); // wait for deletion to complete
+            setDeletingProductId(null);
           }}
-          disabled={isDeleting}
-          className="btn bg-red-600 hover:bg-red-700 text-white text-sm mt-3 w-full"
+          disabled={deletingProductId === product._id}
+          className="btn btn-outline text-sm mt-3 w-full"
         >
-          {isDeleting ? (
+          {deletingProductId === product._id ? (
             "Deleting product..."
           ) : (
             <>

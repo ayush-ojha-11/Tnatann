@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://tnatann.netlify.app"],
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
