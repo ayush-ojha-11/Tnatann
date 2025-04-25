@@ -39,11 +39,11 @@ Welcome to the Marketplace App! This platform connects buyers and sellers, enabl
 
 Add screenshots or images of the app here:
 
-[Screenshot 1](https://github.com/user-attachments/assets/77878685-f2a7-4bc3-832a-738811471d8d)
+![Screenshot 1](https://github.com/user-attachments/assets/77878685-f2a7-4bc3-832a-738811471d8d)
 
-[Screenshot 2](https://github.com/user-attachments/assets/f77b37b3-4eb2-41aa-b88f-0ce4f5233ca9)
+![Screenshot 2](https://github.com/user-attachments/assets/f77b37b3-4eb2-41aa-b88f-0ce4f5233ca9)
 
-[Screenshot 2](https://github.com/user-attachments/assets/b1bb6c05-c033-4880-be79-1aa0846b332e)
+![Screenshot 2](https://github.com/user-attachments/assets/b1bb6c05-c033-4880-be79-1aa0846b332e)
 
 ## Contributing
 
