@@ -1,4 +1,4 @@
-# Marketplace App
+# OLX-like Marketplace App
 
 Welcome to the Marketplace App! This platform connects buyers and sellers, enabling seamless transactions for a wide range of products.
 
