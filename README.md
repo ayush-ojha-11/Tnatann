@@ -13,13 +13,13 @@ Welcome to the Marketplace App! This platform connects buyers and sellers, enabl
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/marketplace-app.git
+   git clone https://github.com/ayush-ojha-11/Tnatann.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd marketplace-app
+   cd Tnatann
    ```
-3. Install dependencies:
+3. Install dependencies(frontend and backend):
    ```bash
    npm install
    ```
@@ -50,10 +50,6 @@ Products page:
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
