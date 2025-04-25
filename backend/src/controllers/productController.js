@@ -7,7 +7,7 @@ export const getProducts = async (req, res) => {
   try {
     const products = await Product.find()
       .sort({ createdAt: -1 })
-      .populate("seller", "name email location phone");
+      .populate("seller", "name email country city state tehsil phone");
     res.status(200).json(products);
   } catch (error) {
     console.log("Error in productController (getProducts) ", error.message);
@@ -20,7 +20,7 @@ export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate(
       "seller",
-      "name email location phone"
+      "name email country city state tehsil phone"
     );
 
     if (!product) {

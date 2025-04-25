@@ -56,7 +56,7 @@ const Footer = () => {
         {/* Contact */}
         <div>
           <h3 className="footer-title text-lg text-white">Contact</h3>
-          <p className="mt-2 text-gray-400">support@olxmern.com</p>
+          <p className="mt-2 text-gray-400">tnatann24@gmail.com</p>
           <p className="text-gray-400">+123 456 7890</p>
         </div>
       </div>

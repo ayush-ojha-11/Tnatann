@@ -1,8 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: winter --default, business --prefersdark;
+  themes: light --default, business --prefersdark;
 }
 
 body {
-  font-family: "Poppins";
+  font-family: "Rubik";
 }

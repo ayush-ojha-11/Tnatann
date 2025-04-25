@@ -36,10 +36,12 @@ export const useAdminStore = create(
         try {
           const { data } = await axiosInstance.get("/products");
           set({
-            otherProducts: data.filter(
-              (item) =>
-                item.category === product.category && item._id !== product._id
-            ),
+            otherProducts: data
+              .filter(
+                (item) =>
+                  item.category === product.category && item._id !== product._id
+              )
+              .slice(0, 6), // show only top 5 related products
           });
         } catch {
           console.log("Failed to load other products!");

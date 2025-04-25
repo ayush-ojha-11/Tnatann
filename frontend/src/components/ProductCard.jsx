@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
           </p>
 
           <span className="flex items-center mt-3 gap-0.5">
-            <MapPin className="size-5" /> {product.seller.location}
+            <MapPin className="size-5" /> {product.seller?.city}
           </span>
         </div>
         <button

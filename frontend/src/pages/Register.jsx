@@ -4,10 +4,18 @@ import { Eye, EyeOff, Lock, Loader2, User2, Mail, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
 import AuthImagePattern from "../components/skeletons/AuthImagePattern.jsx";
 import { useEffect, useState } from "react";
+import { Country, State, City } from "country-state-city";
 
 export const Register = () => {
   const navigate = useNavigate();
   const { register, isRegistering, authUser } = useAuthStore();
+
+  const [countries] = useState(Country.getAllCountries());
+  const [states, setStates] = useState(null);
+  const [cities, setCities] = useState(null);
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
 
   useEffect(() => {
     if (authUser) {
@@ -20,17 +28,22 @@ export const Register = () => {
     name: "",
     email: "",
     password: "",
-    location: "",
+    country: "",
+    state: "",
+    city: "",
+    tehsil: "",
   });
 
   const validateForm = () => {
     if (
       !formData.name.trim() ||
       !formData.email.trim() ||
-      !formData.password.trim() ||
-      !formData.location.trim()
+      !formData.password.trim()
     ) {
       return toast.error("All fields are required!");
+    }
+    if (!formData.country || !formData.state || !formData.city) {
+      return toast.error("Fill your complete location");
     }
     if (!/\S+@\S+\.\S+/.test(formData.email))
       return toast.error("Invalid email format");
@@ -41,6 +54,28 @@ export const Register = () => {
     e.preventDefault();
     if (validateForm() === true) {
       register(formData);
+    }
+  };
+
+  const handleCountryChange = (country) => {
+    setSelectedCountry(country);
+    setStates(State.getStatesOfCountry(country.isoCode));
+    setFormData({ ...formData, country: country.name });
+    setCities([]);
+  };
+
+  const handleStateChange = (state) => {
+    setFormData({ ...formData, state: state.name });
+    setSelectedState(state); // async
+    if (state && selectedCountry) {
+      const cities = City.getCitiesOfState(
+        selectedCountry.isoCode,
+        state.isoCode
+      );
+      setCities(cities);
+      console.log(selectedCountry, state);
+    } else {
+      setCities([]);
     }
   };
 
@@ -101,7 +136,6 @@ export const Register = () => {
                 />
               </div>
             </div>
-
             {/* password */}
             <div className="form-control">
               <label className="label">
@@ -135,12 +169,63 @@ export const Register = () => {
                 </button>
               </div>
             </div>
+            {/* select options */}
+
+            <div className="grid grid-cols-3 sm:grid-cols-3 gap-4">
+              <select
+                className="select select-bordered"
+                onChange={(e) =>
+                  handleCountryChange(
+                    countries.find((c) => c.isoCode === e.target.value)
+                  )
+                }
+              >
+                <option value="">Country</option>
+                {countries.map((country) => (
+                  <option key={country.isoCode} value={country.isoCode}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                disabled={!selectedCountry}
+                className="select select-bordered"
+                onChange={(e) =>
+                  handleStateChange(
+                    states.find((s) => s.isoCode === e.target.value)
+                  )
+                }
+              >
+                <option>State</option>
+                {states?.map((state) => (
+                  <option key={state.isoCode} value={state.isoCode}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                disabled={!selectedState}
+                className="select select-bordered"
+                onChange={(e) =>
+                  setFormData({ ...formData, city: e.target.value })
+                }
+              >
+                <option>City</option>
+                {cities?.map((city) => (
+                  <option key={city.name} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* location */}
 
             <div className="form-control">
               <label className="label">
-                <span className="label-text font-medium">Location</span>
+                <span className="label-text font-medium">Tehsil</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-3 flex items-center z-10">
@@ -150,10 +235,10 @@ export const Register = () => {
                 <input
                   type="text"
                   className="input input-bordered w-full pl-10 relative"
-                  placeholder="Enter your location (City name)"
-                  value={formData.location}
+                  placeholder="Tehsil"
+                  value={formData.tehsil}
                   onChange={(e) =>
-                    setFormData({ ...formData, location: e.target.value })
+                    setFormData({ ...formData, tehsil: e.target.value })
                   }
                 />
               </div>

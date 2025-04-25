@@ -31,7 +31,7 @@ export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().populate(
       "seller",
-      "name email location phone"
+      "name email country city state tehsil phone"
     );
     res.status(200).json(products);
   } catch {

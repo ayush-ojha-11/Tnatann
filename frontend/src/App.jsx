@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Toaster } from "react-hot-toast";
+import ScrollToTop from "./components/ScrollToTop";
 const App = () => {
   const location = useLocation();
 
@@ -18,6 +19,7 @@ const App = () => {
   };
   return (
     <div>
+      <ScrollToTop />
       {renderNavbar()}
       <Outlet />
       <Footer />
